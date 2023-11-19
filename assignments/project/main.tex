@@ -9,13 +9,13 @@
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
+\usepackage{hyperref}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
 T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
     \title{KMeans Kernel Classifier\\
     {\footnotesize \textsuperscript {}Course: Math Behind ML }
-    \thanks{Identify applicable funding agency here. If none, delete this.}
     }
 
     \author{\IEEEauthorblockN{Karthik Kurugodu}
@@ -71,9 +71,9 @@ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
     Assume that K classes are encoded using standard basis in $\mathbb{R}^{K}$, i.e, let $x_{i} \in C_{k}$, then output
     $ y_{i}$ is a vector with 1 in the $k^{th}$ position and 0 elsewhere:
     \begin{align}
-       y_{ij} = \begin{cases}
-            1 & \text{if } x_{i} \in C_{j} \\
-            0 & \text{otherwise}
+        y_{ij} = \begin{cases}
+                     1 & \text{if } x_{i} \in C_{j} \\
+                     0 & \text{otherwise}
         \end{cases}
     \end{align}
     Consider input data $\{(x_{i},y{i}) | x_{i}\in\mathbb{R^{M}},y_{i}\in\mathbb{R^{K}}, i = 1,\ldots,N\}$ and the
@@ -84,15 +84,102 @@ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
     subject to
     \begin{align}
         \langle \phi(x) \;,\; \omega_{j}  \rangle + b_{j} = y_{ij} - \epsilon_{ij}, i = 1,\ldots,N; j = 1,\ldots,K \\
-     w_{j}^{T}\phi(x_{i}) + b_{j} = y_{ij} - \epsilon_{ij} , i = 1,\ldots,N; j = 1,\ldots,K
+        w_{j}^{T}\phi(x_{i}) + b_{j} = y_{ij} - \epsilon_{ij} , i = 1,\ldots,N; j = 1,\ldots,K
     \end{align}
     where $\epsilon_{ij} \geq 0$ are approximation errors, $b_{j}$ is bias coefficient, $w^{(j)}$ is the vector of
     weights corresponding to the $j^{th}$ class. The objective function $S$ is a sum of least squares errors and the
     regularization term. This regularization parameter $\gamma$ corresponds to a multi-dimensional version of the ridge
-    regression problem.
+    regression problem.\\
 %    \subsection{Maintaining the Integrity of the Specifications}
+    \doublespacing In the primal weight space the multi class classifier takes the form:
+    \begin{align}
+        x \in C_{k}, \Leftrightarrow k= arg \max_{j=1,\ldots,K} g_{j}(x) \\
+        \text{where } g_{j}(x) = \frac{\text{exp}(\langle \phi(x)\;,\; w^{(j})\rangle + b_{j})}{\sum_{i=1}^{K} \text{exp}(\langle \phi(x)\;,\; w^{(i})\rangle + b_{i})}
+    \end{align}
+    Here $g_{j}$ is the non-linear soft max function \\
+    Now applying Lagrangian to $(5)$
+    \begin{align*}
+        &L(w,b,\epsilon,a) = S(w,b,\epsilon)\\
+        &- \sum_{i=1}^{N} \sum_{j=1}^{K} a_{ij}[\langle \phi(x) \;,\; \omega_{j}  \rangle + b_{j} - y_{ij} + \epsilon_{ij}]
+    \end{align*}
+    where $a_{ij} \in \mathbb{Re}$ is the lagrange multiplier.
+    Now applying KKT conditions:
+    \begin{align}
+        &\frac{{\partial L}}{{\partial w^{(j)}}} = 0 \implies w^{(j)} = \sum_{n=1}^{N}a_{nj}\phi(x_{n}) \\
+        &\frac{{\partial L}}{{\partial b_{(j)}}} = 0 \implies \sum_{i=1}^{N}a_{ij} = 0 \\
+        &\frac{{\partial L}}{{\partial \epsilon_{(ij)}}} = 0 \implies
+        a_{ij} = \gamma \epsilon_{ij} \\
+        &\frac{{\partial L}}{{\partial a_{(ij)}}} = 0 \implies
+        \langle \phi(x) \;,\; \omega_{j}  \rangle + b_{j} - y_{ij} + \epsilon_{ij} = 0
+    \end{align}
+    \\
+    Now from eq$(10)$ , eq$(12)$ and eq$(13)$:
+    \begin{align}
+        &\sum_{n=1}^{N} [\Omega(x_{i},x_{n}) + \gamma^{-1}\delta_{in}]a_{nj} + b{j} = y_{ij},
+    \end{align}
+    Here $\delta_{in}$ is the Kronecker delta function: where $\delta_{in} =1$ if $i=n$ and $0$ otherwise \\
+    As you can see in eq$(14)$ there are $K$ independent system of equations with binary labels $y_{ij}$. Now each
+    system can be written in the matrix form as follows:
+    \begin{align}
+        \begin{bmatrix}
+            0 & u^{T}                 \\
+            u & \Omega + \gamma^{-1}I
+        \end{bmatrix}
+        \begin{bmatrix}
+            b_{j} \\
+            a^{(j)}
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            0 \\
+            y_{j}
+        \end{bmatrix}
+        , j = 1,\ldots,K
+    \end{align}
+    Here $I_{N \times N}$ is the identity matrix, $u_{N \times 1} = [1,\ldots,1]^{T}$ is a vector of ones,
+    $a^{(j)}_{N \times 1} = [a_{1j}, \ldots, a_{Nj}]^{T}$ is weights and $y_{j} = [y_{1j}, \ldots, y_{Nj}]^{T}$ is the
+    vector of binary labels for the $j^{th}$ class.
 
-    \section{Prepare Your Paper Before Styling}
+    Each system has $N+1$ linear equations with $N+1$ unknowns. Each system has $N+1$ linear equations with $N+1$
+    unknowns.
+    \begin{align}
+        \Theta = \begin{bmatrix}
+                     0 & u^{T}                 \\
+                     u & \Omega + \gamma^{-1}I
+        \end{bmatrix}
+    \end{align}
+    All the $K$ systems can be written as:
+    \begin{align}
+        \Theta W = Z
+    \end{align}
+    where
+    \begin{align*}
+        W_{(N+1) \times K} = \begin{bmatrix}
+                                 b_{1}   & \ldots & b_{K}   \\
+                                 a^{(1)} & \ldots & a^{(K)}
+        \end{bmatrix}
+        , Z_{(N+1) \times K} = \begin{bmatrix}
+                                   0     & \ldots & 0     \\
+                                   y_{1} & \ldots & y_{K}
+        \end{bmatrix}
+    \end{align*}
+    Now once all the $K$ systems are solved, we consider multi-class classifier in dual space(from eq $(14)$) as follows:
+    \begin{align*}
+        &g_{j}(x) = \frac{\text{exp}(\langle \phi(x)\;,\; w^{(j})\rangle + b_{j})}{\sum_{i=1}^{K} \text{exp}(\langle \phi(x)\;,\; w^{(i})\rangle + b_{i})}\\
+        &\text{From eq$(9)$ and eq$(10)$, we get:} \\
+        &g_{j}(x) = \frac{\sum_{n=1}^{N}\text{exp}(\Omega(x,x_{n})a_{nj} + b_{j})}{\sum_{i=1}^{K} \sum_{n=1}^{N}\text{exp}(\Omega(x,x_{n})a_{ni} + b_{i})}
+    \end{align*}
+    Now our problem becomes:
+    \begin{align}
+        & x \in C_{k}, \Leftrightarrow k= arg \max_{j=1,\ldots,K} g_{j}(x)
+    \end{align}
+    \text{where}
+    \begin{align*}
+        & g_{j}(x) = \frac{\sum_{n=1}^{N}\text{exp}(\Omega(x,x_{n})a_{nj} + b_{j})}{\sum_{i=1}^{K} \sum_{n=1}^{N}\text{exp}(\Omega(x,x_{n})a_{ni} + b_{i})}
+    \end{align*}
+
+
+    \section{KMeans Clustering}
     Before you begin to format your paper, first write and save the content as a
     separate text file. Complete all content and organizational editing before
     formatting. Please note sections \ref{AA}--\ref{SCM} below for more information on
