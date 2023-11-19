@@ -10,6 +10,7 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{hyperref}
+\usepackage{wasysym}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
 T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
@@ -177,17 +178,22 @@ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
     \begin{align*}
         & g_{j}(x) = \frac{\sum_{n=1}^{N}\text{exp}(\Omega(x,x_{n})a_{nj} + b_{j})}{\sum_{i=1}^{K} \sum_{n=1}^{N}\text{exp}(\Omega(x,x_{n})a_{ni} + b_{i})}
     \end{align*}
-
+    \text{Here $g_{j}$ is the non-linear soft max function} \\
 
     \section{KMeans Clustering}
-    Before you begin to format your paper, first write and save the content as a
-    separate text file. Complete all content and organizational editing before
-    formatting. Please note sections \ref{AA}--\ref{SCM} below for more information on
-    proofreading, spelling and grammar.
+    First we use KMeans clustering algorithm to extract a set of representative vectors for each class.
+    Now this representative vectors will be passed into LS-SVM kernel model as training dataset.
+    KMeans clustering algorithm is as follows:
+    \begin{enumerate}
+    \item Take $\{x_{i}^{k}|x_{i}^{k} \in \mathbb{R^{M}}, i=1,\ldots,N_{k}\}$ as training samples for class $C_{k}$ where
+    $N_{k}$ is the number of training samples for the class $C_{k}$ and $N = \sum_{k=1}^{K}N_{k}$ is the total
+    number of training samples.
 
-    Keep your text and graphic files separate until after the text has been
-    formatted and styled. Do not number text heads---{\LaTeX} will do that
-    for you.
+    \item Take $\{\mu_{q}^{k}|\mu_{q}^{k} \ in \mathbb{R^{M}}, q=1,\ldots,Q \}$ as intial centroids
+    for class $C_{k}$ where $Q<N_{K}$ is the number of centroids for class $C_{k}$. \\
+
+    \item
+    \end{enumerate}
 
     \subsection{Abbreviations and Acronyms}\label{AA}
     Define abbreviations and acronyms the first time they are used in the text,
