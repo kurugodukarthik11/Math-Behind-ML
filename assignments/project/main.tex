@@ -195,9 +195,9 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
         \item Take $\{\mu_{q}^{k}|\mu_{q}^{k} \in \mathbb{R^{M}}, q=1,\ldots,Q \}$ as initial centroids
         for class $C_{k}$ where $Q<N_{K}$ is the number of centroids for class $C_{k}$.
         \item Build a matrix $X_{k} = [x_{im}^{k}]_{N_{k} \times M}$ where each row is a training sample for class $C_{k}$.
-        \item Build a matrix $\Xi_{k} = [\xi_{qm}^{k}]_{Q \times M}$ where each row is a randomly initialized centroid
+        \item Build a matrix $M_{k} = [\mu_{qm}^{k}]_{Q \times M}$ where each row is a randomly initialized centroid
         for class $C_{k}$.
-        \item Let $R_{k} = X_{k}\Xi_{k}^{T} = [r_{iq}^{k}]_{N_{k}\times Q}$
+        \item Let $R_{k} = X_{k}M_{k}^{T} = [r_{iq}^{k}]_{N_{k}\times Q}$
         \item Let $\hat{R_{k}} = [\hat{r_{iq}^{k}}]_{N_{k}\times Q}$ be transformed sparse matrix of $R_{k}$ where:
         \begin{align*}
         \hat{r_{iq}^{k}} = \begin{cases}
@@ -207,20 +207,20 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
         i = 1,\ldots,N_{k}
         \end{align*}
         Each sample is assigned to the nearest centroid.
-        \item $\hat{\Xi_{k}} = \hat{R_{k}^{T}}X_{k} = [\hat{\xi_{qm}^{k}}]_{Q \times M}$. \\
+        \item $\hat{M_{k}} = \hat{R_{k}^{T}}X_{k} = [\hat{\mu_{qm}^{k}}]_{Q \times M}$. \\
         This is the new set of centroids.
         \item Normalizing new set of centroids:
         \begin{align*}
-        & \hat{\xi_{q}^{k}} = \frac{\hat{\xi_{q}^{k}}}{|| \hat{\xi_{q}^{k}} ||}
+        & \hat{\mu_{q}^{k}} = \frac{\hat{\mu_{q}^{k}}}{|| \hat{\mu_{q}^{k}} ||}
         & q=1,\ldots,Q
         \end{align*}
         \item Computing alignment deviation between new set and old set of centroids:
         \begin{align*}
-        \delta = 1 - \frac{\sum_{q=1}^{Q}\langle \hat{\xi_{q}^{k}}\; \; \xi_{q}^{k} \rangle}{Q}
+        \delta = 1 - \frac{\sum_{q=1}^{Q}\langle \hat{\mu_{q}^{k}}\; \; \mu_{q}^{k} \rangle}{Q}
         \end{align*}
-        \item $\Xi_{k} = \hat{\Xi_{k}}$
+        \item $M_{k} = \hat{M_{k}}$
         \item Repeat steps 5 to 10 until $\delta < \beta $ where $\beta$ is the tolerance.
-        \item Return $\Xi_{k}$
+        \item Return $M_{k}$
     \end{enumerate}
 
     Here $\beta$ is considered as small as possible.
@@ -236,7 +236,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     \end{align*}
     Training dataset for LS-SVM after KMeans clustering:
     \begin{align*}
-        \{(\xi_{q}^{k},y_{q}^{k})| \xi_{q}^{k} \in \mathbb{R^{M}},y_{q}^{k} \in \mathbb{R^{K}}, q=1,\ldots,KQ\}
+        \{(\mu_{q}^{k},y_{q}^{k})| \mu_{q}^{k} \in \mathbb{R^{M}},y_{q}^{k} \in \mathbb{R^{K}}, q=1,\ldots,KQ\}
     \end{align*}
     As you can see the training dataset size is reduced from $N$ to $KQ$ where $KQ<N$.
 
@@ -251,7 +251,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     Now our problem becomes:
     \begin{align*}
         & x \in C_{k}, \Leftrightarrow k= arg \max_{j=1,\ldots,K} g_{j}(x) \\
-        & \text{where } g_{j}(x) = \frac{\sum_{n=1}^{KQ}\exp(\Omega(x,\xi_{n}^{k})a_{nj} + b_{j})}{\sum_{i=1}^{K} \sum_{n=1}^{KQ}\exp(\Omega(x,\xi_{n}^{k})a_{ni} + b_{i})}
+        & \text{where } g_{j}(x) = \frac{\sum_{n=1}^{KQ}\exp(\Omega(x,\mu_{n}^{k})a_{nj} + b_{j})}{\sum_{i=1}^{K} \sum_{n=1}^{KQ}\exp(\Omega(x,\mu_{n}^{k})a_{ni} + b_{i})}
     \end{align*}
     \text{Here $g_{j}$ is the non-linear soft max function}
 

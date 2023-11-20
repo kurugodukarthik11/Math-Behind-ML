@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.9) (preloaded format=pdflatex 2023.11.19)  20 NOV 2023 02:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.9) (preloaded format=pdflatex 2023.11.19)  20 NOV 2023 15:15
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -555,10 +555,6 @@ Before submitting the final camera ready copy, remember to:
 LaTeX2e <2023-06-01> patch level 1
 L3 programming layer <2023-08-29>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: D3AAAD82E5B14025E9D2C2B8170DF7D6;796.
  ) 
@@ -586,7 +582,7 @@ ata/Local/Programs/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/PC/AppDat
 a/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/PC/AppData/L
 ocal/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
 Output written on "E:/Files_laptop\Course Materials\SEM7\mbml\Math-Behind-ML\ou
-t\main.pdf" (4 pages, 176669 bytes).
+t\main.pdf" (4 pages, 176350 bytes).
 PDF statistics:
  158 PDF objects out of 1000 (max. 8388607)
  41 named destinations out of 1000 (max. 500000)
