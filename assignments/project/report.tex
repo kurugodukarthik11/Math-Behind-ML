@@ -276,6 +276,7 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
         With each centroid we associate a label $y_{q}^{k}$ which is a vector with 1 in the $k^{th}$ position and
         $0$ elsewhere and we train the LS-SVM classifier.
     \end{enumerate}
+
     \subsection{Explanation}
     From each image $x_{n}$ we are extracting $(L - l +1) \times (L - l + 1)$ patches.
     We're sliding this patch across the image one pixel at a time, both horizontally and vertically.
@@ -306,14 +307,15 @@ T \kern -.1667em \lower .7ex \hbox{E} \kern -.125emX}}
     We take the majority vote of all the predicted labels, assign that label to the test image $x_{n}$.
 
     \subsection{Interpretation}
-       \begin{figure}[htbp]
-            \centering
-            \includegraphics[scale=0.6]{output.png} % Adjust the width as needed
-            \caption{$Q$ vs $\eta\%$ (test error)}
-            \label{fig}
-        \end{figure}
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[scale=0.6]{output.png} % Adjust the width as needed
+        \caption{$Q$ vs $\eta\%$ (test error)}
+        \label{fig}
+    \end{figure}
 
     From the Fig.~\ref{fig} optimal $Q$ was considered as $4000$ where the test error, $\eta = 0.89\%$.
+
 
     \section{Conclusion}\label{sec:conclusion}
     First we have used KMeans clustering algorithm to extract a set of representative vectors for each class.

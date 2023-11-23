@@ -1,20 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Beamer Presentation
-% LaTeX Template
-% Version 1.0 (10/11/12)
-%
-% This template has been downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND THEMES
-%----------------------------------------------------------------------------------------
-
 \documentclass{beamer}
 \setbeamertemplate{navigation symbols}{}
 \mode<presentation> {
@@ -39,11 +22,11 @@
 % \usetheme{Ilmenau}
 % \usetheme{JuanLesPins}
 % \usetheme{Luebeck}
-\usetheme{Madrid}
-\setbeamertemplate{footline}{}
-\newcounter{saveenumi}
-\newcommand{\seti}{\setcounter{saveenumi}{\value{enumi}}}
-\newcommand{\conti}{\setcounter{enumi}{\value{saveenumi}}}
+    \usetheme{Madrid}
+    \setbeamertemplate{footline}{}
+    \newcounter{saveenumi}
+    \newcommand{\seti}{\setcounter{saveenumi}{\value{enumi}}}
+    \newcommand{\conti}{\setcounter{enumi}{\value{saveenumi}}}
 
 % \resetcounteronoverlays{saveenumi}
 %\usetheme{Malmoe}
@@ -93,37 +76,39 @@
 \author{Karthik Kurugodu \and Nikhil Kongara} % Your name
 \institute[] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
 {
-IIT Hyderabad \\ % Your institution for the title page
-\medskip
-\textit{} % Your email address
+    IIT Hyderabad \\ % Your institution for the title page
+    \medskip
+    \textit{} % Your email address
 }
 \date{\today} % Date, can be changed to a custom date
 
 \begin{document}
 
-\begin{frame}
-\titlepage % Print the title page as the first slide
-\end{frame}
+    \begin{frame}
+        \titlepage % Print the title page as the first slide
+    \end{frame}
 
-\begin{frame}
-\frametitle{Contents} % Table of contents slide, comment this block out to remove it
-\tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
-\end{frame}
+    \begin{frame}
+        \frametitle{Contents} % Table of contents slide, comment this block out to remove it
+        \tableofcontents % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+    \end{frame}
 
 %----------------------------------------------------------------------------------------
 %	PRESENTATION SLIDES
 %----------------------------------------------------------------------------------------
 
 %------------------------------------------------
-\section{Abstract}
-\begin{frame}[fragile]
-\frametitle{Abstract}
-\begin{block}{Abstract}
-The least squares SVM is a kernel method for non-linear regression and classification tasks.
-        Here we combine KMeans clustering with the least squares SVM. First KMeans clustering is used to extract a set of representative vectors for each class, and then LS-SVM uses these representative vectors as a training dataset for the classification task
-\end{block}
 
-\end{frame}
+
+    \section{Abstract}
+    \begin{frame}[fragile]
+        \frametitle{Abstract}
+        \begin{block}{Abstract}
+            The least squares SVM is a kernel method for non-linear regression and classification tasks.
+            Here we combine KMeans clustering with the least squares SVM. First KMeans clustering is used to extract a set of representative vectors for each class, and then LS-SVM uses these representative vectors as a training dataset for the classification task
+        \end{block}
+
+    \end{frame}
 % \section{Introduction}
 % \begin{frame}{Introduction}
 %     The kernel methods transform a given non-linear problem into a linear one by using a similarity kernel function $\Omega(x,x\prime)$.
@@ -153,443 +138,314 @@ The least squares SVM is a kernel method for non-linear regression and classific
 %     \end{enumerate}
 % \end{frame}
 
-\section{Kernel LS-SVM Classifier}
-\begin{frame}{Kernel LS-SVM Classifier}
-    The kernel LS-SVM simplifies the optimization problem by
-    considering equality constraints only, such that solution is obtained by solving a system of linear equations.
-    Now this problem is similar to ridge regression problem which is formulated as follows:
-    \begin{align}
-        \min_{w,b} \frac{1}{2}w^{T}w + \frac{\gamma}{2}\sum_{n=1}^{N}(\hat{y}_{n} - w^{T}\phi(x_{n}) - b)^{2}
-    \end{align}
-     Assume that K classes are encoded using standard basis in $\mathbb{R}^{K}$, i.e, let $x_{i} \in C_{k}$, then output
-    $ y_{i}$ is a vector with 1 in the $k^{th}$ position and 0 elsewhere:
-    \begin{align}
-        y_{ij} = \begin{cases}
-                     1 & \text{if } x_{i} \in C_{j} \\
-                     0 & \text{otherwise}
-        \end{cases}
-    \end{align}
-\end{frame}
-\begin{frame}{Kernel LS-SVM Classifier}
 
-    Consider input data $\{(x_{i},y{i}) | x_{i}\in\mathbb{R^{M}},y_{i}\in\mathbb{R^{K}}, i = 1,\ldots,N\}$ and the
-    feature mapping function $\phi(x)$.
-    The kernel LS-SVM is formulated as follows:
-    \begin{align}
-        \min_{w,b} S(w,b,\epsilon) = \frac{1}{2}\sum_{j=1}^{K}w_{j}^{T}w_{j} + \frac{\gamma}{2}\sum_{i=1}^{N}\sum_{j=1}^{K}\epsilon_{ij}^{2}
-    \end{align}
-    subject to
-    \begin{align}
-        \langle \phi(x) \;,\; \omega_{j}  \rangle + b_{j} = y_{ij} - \epsilon_{ij}, i = 1,\ldots,N; j = 1,\ldots,K \\
-        w_{j}^{T}\phi(x_{i}) + b_{j} = y_{ij} - \epsilon_{ij} , i = 1,\ldots,N; j = 1,\ldots,K
-    \end{align}
-    where $\epsilon_{ij} \geq 0$ are approximation errors, $b_{j}$ is bias coefficient, $w^{(j)}$ is the vector of
-    weights corresponding to the $j^{th}$ class.
-    The objective function $S$ is a sum of least squares errors and the
-    regularization term.
-    This regularization parameter $\gamma$ corresponds to a multi-dimensional version of the ridge
-    regression problem.
-\end{frame}
-\begin{frame}{Kernel LS-SVM Classifier}
-    In the primal weight space the multi class classifier takes the form:
-    \begin{align*}
-        & x \in C_{k}, \Leftrightarrow k= arg \max_{j=1,\ldots,K} g_{j}(x) \\
-        & \text{where } g_{j}(x) = \frac{\exp(\langle \phi(x)\;,\; w^{(j)})\rangle + b_{j})}{\sum_{i=1}^{K} \exp(\langle \phi(x)\;,\; w^{(i)})\rangle + b_{i})} \\
-        & \text{Here $g_{j}$ is the non-linear soft max function}
-    \end{align*}
-    Now applying Lagrangian to $(5)$
-    \begin{align*}
-        &L(w,b,\epsilon,a) = S(w,b,\epsilon)\\
-        &- \sum_{i=1}^{N} \sum_{j=1}^{K} a_{ij}[\langle \phi(x) \;,\; \omega_{j}  \rangle + b_{j} - y_{ij} + \epsilon_{ij}]
-    \end{align*}
-    where $a_{ij} \in \mathbb{Re}$ is the Lagrange multiplier.
-\end{frame}
-\begin{frame}{Kernel LS-SVM Classifier}
-Now applying KKT conditions:
-    \begin{align}
-        &\frac{{\partial L}}{{\partial w^{(j)}}} = 0 \implies w^{(j)} = \sum_{n=1}^{N}a_{nj}\phi(x_{n}) \\
-        &\frac{{\partial L}}{{\partial b_{(j)}}} = 0 \implies \sum_{i=1}^{N}a_{ij} = 0 \\
-        &\frac{{\partial L}}{{\partial \epsilon_{ij}}} = 0 \implies
-        a_{ij} = \gamma \epsilon_{ij} \\
-        &\frac{{\partial L}}{{\partial a_{ij}}} = 0 \implies
-        \langle \phi(x) \;,\; \omega_{j}  \rangle + b_{j} - y_{ij} + \epsilon_{ij} = 0
-    \end{align}
+    \section{Kernel LS-SVM Classifier}
+    \begin{frame}{Kernel LS-SVM Classifier}
+        The kernel LS-SVM simplifies the optimization problem by
+        considering equality constraints only, such that solution is obtained by solving a system of linear equations.
+        Now this problem is similar to ridge regression problem which is formulated as follows:
+        \begin{align}
+            \min_{w,b} \frac{1}{2}w^{T}w + \frac{\gamma}{2}\sum_{n=1}^{N}(\hat{y}_{n} - w^{T}\phi(x_{n}) - b)^{2}
+        \end{align}
+        Assume that K classes are encoded using standard basis in $\mathbb{R}^{K}$, i.e, let $x_{i} \in C_{k}$, then output
+        $ y_{i}$ is a vector with 1 in the $k^{th}$ position and 0 elsewhere:
+        \begin{align}
+            y_{ij} = \begin{cases}
+                         1 & \text{if } x_{i} \in C_{j} \\
+                         0 & \text{otherwise}
+            \end{cases}
+        \end{align}
     \end{frame}
     \begin{frame}{Kernel LS-SVM Classifier}
-    Now from eq$(8)$, eq$(10)$ and eq$(11)$:
-    \begin{align}
-        &\sum_{n=1}^{N} [\Omega(x_{i},x_{n}) + \gamma^{-1}\delta_{in}]a_{nj} + b{j} = y_{ij},
-    \end{align}
-    Here $\delta_{in}$ is the Kronecker delta function: where $\delta_{in} =1$ if $i=n$ and $0$ otherwise \\
-    As you can see in eq$(12)$ there are $K$ independent system of equations with binary labels $y_{ij}$.
-    Now each system can be written in the matrix form as follows:
-    \begin{align}
-        \begin{bmatrix}
-            0 & u^{T}                 \\
-            u & \Omega + \gamma^{-1}I
-        \end{bmatrix}
-        \begin{bmatrix}
-            b_{j} \\
-            a^{(j)}
-        \end{bmatrix}
-        =
-        \begin{bmatrix}
-            0 \\
-            y_{j}
-        \end{bmatrix}
-        , j = 1,\ldots,K
-    \end{align}
-\end{frame}
-\begin{frame}{Kernel LS-SVM Classifier}
-    Here $I_{N \times N}$ is the identity matrix, $u_{N \times 1} = [1,\ldots,1]^{T}$ is a vector of ones,
-    $a^{(j)}_{N \times 1} = [a_{1j}, \ldots, a_{Nj}]^{T}$ is weights and $y_{j} = [y_{1j}, \ldots, y_{Nj}]^{T}$ is the
-    vector of binary labels for the $j^{th}$ class.
-    Each system has $N+1$ linear equations with $N+1$ unknowns.
-    \begin{align}
-        \Theta = \begin{bmatrix}
-                     0 & u^{T}                 \\
-                     u & \Omega + \gamma^{-1}I
-        \end{bmatrix}
-    \end{align}
-    All the $K$ systems can be written as:
-    \begin{align}
-        \Theta W = Z
-    \end{align}
-    where
-    \begin{align*}
-        W_{(N+1) \times K} = \begin{bmatrix}
-                                 b_{1}   & \ldots & b_{K}   \\
-                                 a^{(1)} & \ldots & a^{(K)}
-        \end{bmatrix}
-        , Z_{(N+1) \times K} = \begin{bmatrix}
-                                   0     & \ldots & 0     \\
-                                   y_{1} & \ldots & y_{K}
-        \end{bmatrix}
-    \end{align*}
-\end{frame}
-\begin{frame}{Kernel LS-SVM Classifer}
-    Now once all the $K$ systems are solved, we consider multi-class classifier in dual space(from eq $(12)$) as follows:
-    \begin{align*}
-        &g_{j}(x) = \frac{\exp(\langle \phi(x)\;,\; w^{(j)})\rangle + b_{j})}{\sum_{i=1}^{K} \exp(\langle \phi(x)\;,\; w^{(i)})\rangle + b_{i})}\\
-        &\text{Substituting eq$(8)$ in above equation} \\
-        &g_{j}(x) = \frac{\prod_{n=1}^{N}\exp(\Omega(x,x_{n})a_{nj} + b_{j})}{\sum_{i=1}^{K} \prod_{n=1}^{N}\exp(\Omega(x,x_{n})a_{ni} + b_{i})}
-    \end{align*}
-    Now our problem becomes:
-    \begin{align*}
-        & x \in C_{k}, \Leftrightarrow k= arg \max_{j=1,\ldots,K} g_{j}(x)\\
-        & \text{where } g_{j}(x) = \frac{\prod_{n=1}^{N}\exp(\Omega(x,x_{n})a_{nj} + b_{j})}{\sum_{i=1}^{K} \prod_{n=1}^{N}\exp(\Omega(x,x_{n})a_{ni} + b_{i})}
-    \end{align*}
 
-    \text{Here $g_{j}$ is the non-linear soft max function}
-\end{frame}
-\section{KMeans Clustering}
-\begin{frame}{KMeans Clustering}
-    First we use KMeans clustering algorithm to extract a set of representative vectors for each class.
-    Now this representative vectors will be passed into LS-SVM kernel model as training dataset.
-    KMeans clustering algorithm is as follows:
-    \begin{enumerate}
-        \item Take $\{x_{i}^{k}|x_{i}^{k} \in \mathbb{R^{M}}, i=1,\ldots,N_{k}\}$ as training samples for class $C_{k}$ where
-        $N_{k}$ is the number of training samples for the class $C_{k}$ and $N = \sum_{k=1}^{K}N_{k}$ is the total
-        number of training samples.
-        \item Take $\{\mu_{q}^{k}|\mu_{q}^{k} \in \mathbb{R^{M}}, q=1,\ldots,Q \}$ as initial centroids
-        for class $C_{k}$ where $Q<N_{K}$ is the number of centroids for class $C_{k}$.
-        \item Build a matrix $X_{k} = [x_{im}^{k}]_{N_{k} \times M}$ where each row is a training sample for class $C_{k}$.
-        \item Build a matrix $M_{k} = [\mu_{qm}^{k}]_{Q \times M}$ where each row is a randomly initialized centroid
-        for class $C_{k}$.
-        \item Let $R_{k} = X_{k}M_{k}^{T} = [r_{iq}^{k}]_{N_{k}\times Q}$
-      \seti
-\end{enumerate}
-\end{frame}
-\begin{frame}{KMeans Clustering}
-    \begin{enumerate}
-    \conti
-          \item Let $\hat{R_{k}} = [\hat{r_{iq}^{k}}]_{N_{k}\times Q}$ be transformed sparse matrix of $R_{k}$ where:
+        Consider input data $\{(x_{i},y{i}) | x_{i}\in\mathbb{R^{M}},y_{i}\in\mathbb{R^{K}}, i = 1,\ldots,N\}$ and the
+        feature mapping function $\phi(x)$.
+        The kernel LS-SVM is formulated as follows:
+        \begin{align}
+            \min_{w,b} S(w,b,\epsilon) = \frac{1}{2}\sum_{j=1}^{K}w_{j}^{T}w_{j} + \frac{\gamma}{2}\sum_{i=1}^{N}\sum_{j=1}^{K}\epsilon_{ij}^{2}
+        \end{align}
+        subject to
+        \begin{align}
+            \langle \phi(x) \;,\; \omega_{j}  \rangle + b_{j} = y_{ij} - \epsilon_{ij}, i = 1,\ldots,N; j = 1,\ldots,K \\
+            w_{j}^{T}\phi(x_{i}) + b_{j} = y_{ij} - \epsilon_{ij} , i = 1,\ldots,N; j = 1,\ldots,K
+        \end{align}
+        where $\epsilon_{ij} \geq 0$ are approximation errors, $b_{j}$ is bias coefficient, $w^{(j)}$ is the vector of
+        weights corresponding to the $j^{th}$ class.
+        The objective function $S$ is a sum of least squares errors and the
+        regularization term.
+        This regularization parameter $\gamma$ corresponds to a multi-dimensional version of the ridge
+        regression problem.
+    \end{frame}
+    \begin{frame}{Kernel LS-SVM Classifier}
+        In the primal weight space the multi class classifier takes the form:
         \begin{align*}
-            \hat{r_{iq}^{k}} = \begin{cases}
-                                   1 & \text{if } q = \arg \max_{q}r_{iq}^{k} \\
-                                   0 & \text{otherwise}
-            \end{cases}
-            i = 1,\ldots,N_{k}
+            & x \in C_{k}, \Leftrightarrow k= arg \max_{j=1,\ldots,K} g_{j}(x) \\
+            & \text{where } g_{j}(x) = \frac{\exp(\langle \phi(x)\;,\; w^{(j)})\rangle + b_{j})}{\sum_{i=1}^{K} \exp(\langle \phi(x)\;,\; w^{(i)})\rangle + b_{i})} \\
+            & \text{Here $g_{j}$ is the non-linear soft max function}
         \end{align*}
-        Each sample is assigned to the nearest centroid.
-        \item $\hat{M_{k}} = \hat{R_{k}^{T}}X_{k} = [\hat{\mu_{qm}^{k}}]_{Q \times M}$. This is the new set of centroids.
-        \item Normalizing new set of centroids:
+        Now applying Lagrangian to $(5)$
         \begin{align*}
-            & \hat{\mu_{q}^{k}} = \frac{\hat{\mu_{q}^{k}}}{|| \hat{\mu_{q}^{k}} ||}
-            & q=1,\ldots,Q
+            &L(w,b,\epsilon,a) = S(w,b,\epsilon)\\
+            &- \sum_{i=1}^{N} \sum_{j=1}^{K} a_{ij}[\langle \phi(x) \;,\; \omega_{j}  \rangle + b_{j} - y_{ij} + \epsilon_{ij}]
         \end{align*}
-        \seti
-        % \seti
-    \end{enumerate}
-\end{frame}
-\begin{frame}{KMeans Clustering}
-    \begin{enumerate}
-    \conti
-        \item Computing alignment deviation between new set and old set of centroids:
+        where $a_{ij} \in \mathbb{Re}$ is the Lagrange multiplier.
+    \end{frame}
+    \begin{frame}{Kernel LS-SVM Classifier}
+        Now applying KKT conditions:
+        \begin{align}
+            &\frac{{\partial L}}{{\partial w^{(j)}}} = 0 \implies w^{(j)} = \sum_{n=1}^{N}a_{nj}\phi(x_{n}) \\
+            &\frac{{\partial L}}{{\partial b_{(j)}}} = 0 \implies \sum_{i=1}^{N}a_{ij} = 0 \\
+            &\frac{{\partial L}}{{\partial \epsilon_{ij}}} = 0 \implies
+            a_{ij} = \gamma \epsilon_{ij} \\
+            &\frac{{\partial L}}{{\partial a_{ij}}} = 0 \implies
+            \langle \phi(x) \;,\; \omega_{j}  \rangle + b_{j} - y_{ij} + \epsilon_{ij} = 0
+        \end{align}
+    \end{frame}
+    \begin{frame}{Kernel LS-SVM Classifier}
+        Now from eq$(8)$, eq$(10)$ and eq$(11)$:
+        \begin{align}
+            &\sum_{n=1}^{N} [\Omega(x_{i},x_{n}) + \gamma^{-1}\delta_{in}]a_{nj} + b{j} = y_{ij},
+        \end{align}
+        Here $\delta_{in}$ is the Kronecker delta function: where $\delta_{in} =1$ if $i=n$ and $0$ otherwise \\
+        As you can see in eq$(12)$ there are $K$ independent system of equations with binary labels $y_{ij}$.
+        Now each system can be written in the matrix form as follows:
+        \begin{align}
+            \begin{bmatrix}
+                0 & u^{T}                 \\
+                u & \Omega + \gamma^{-1}I
+            \end{bmatrix}
+            \begin{bmatrix}
+                b_{j} \\
+                a^{(j)}
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                0 \\
+                y_{j}
+            \end{bmatrix}
+            , j = 1,\ldots,K
+        \end{align}
+    \end{frame}
+    \begin{frame}{Kernel LS-SVM Classifier}
+        Here $I_{N \times N}$ is the identity matrix, $u_{N \times 1} = [1,\ldots,1]^{T}$ is a vector of ones,
+        $a^{(j)}_{N \times 1} = [a_{1j}, \ldots, a_{Nj}]^{T}$ is weights and $y_{j} = [y_{1j}, \ldots, y_{Nj}]^{T}$ is the
+        vector of binary labels for the $j^{th}$ class.
+        Each system has $N+1$ linear equations with $N+1$ unknowns.
+        \begin{align}
+            \Theta = \begin{bmatrix}
+                         0 & u^{T}                 \\
+                         u & \Omega + \gamma^{-1}I
+            \end{bmatrix}
+        \end{align}
+        All the $K$ systems can be written as:
+        \begin{align}
+            \Theta W = Z
+        \end{align}
+        where
         \begin{align*}
-            \delta = 1 - \frac{\sum_{q=1}^{Q}\langle \hat{\mu_{q}^{k}}\; \; \mu_{q}^{k} \rangle}{Q}
+            W_{(N+1) \times K} = \begin{bmatrix}
+                                     b_{1}   & \ldots & b_{K}   \\
+                                     a^{(1)} & \ldots & a^{(K)}
+            \end{bmatrix}
+            , Z_{(N+1) \times K} = \begin{bmatrix}
+                                       0     & \ldots & 0     \\
+                                       y_{1} & \ldots & y_{K}
+            \end{bmatrix}
         \end{align*}
-        \item $M_{k} = \hat{M_{k}}$
-        \item Repeat steps 5 to 10 until $\delta < \beta $ where $\beta$ is the tolerance.
-        \item Return $M_{k}$
-    \end{enumerate}
-     Here $\beta$ is considered as small as possible.
-\end{frame}
-\section{KMeans Kernel LS-SVM Classifier}
-\begin{frame}{KMeans Kernel LS-SVM Classifier}
-    \quad After extracting a set of representative vectors for each class
-    $C_{k}, k=1,\ldots,K$ using KMeans clustering,
-    we pass these $KQ$ centroids into LS-SVM kernel model as training dataset. \\
-    \quad \\
-    \quad Training dataset for LS-SVM before KMeans clustering:
-    \begin{align*}
-        \{(x_{i}^{k},y_{i}^{k})| x_{i}^{k} \in \mathbb{R^{M}},y_{i}^{k} \in \mathbb{R^{K}}, i=1,\ldots,N\}
-    \end{align*}
-    \quad Training dataset for LS-SVM after KMeans clustering:
-    \begin{align*}
-        \{(\mu_{q}^{k},y_{q}^{k})| \mu_{q}^{k} \in \mathbb{R^{M}},y_{q}^{k} \in \mathbb{R^{K}}, q=1,\ldots,KQ\}
-    \end{align*}
-    \quad As you can see the training dataset size is reduced from $N$ to $KQ$ where \quad $KQ<N$.
+    \end{frame}
+    \begin{frame}{Kernel LS-SVM Classifer}
+        Now once all the $K$ systems are solved, we consider multi-class classifier in dual space(from eq $(12)$) as follows:
+        \begin{align*}
+            &g_{j}(x) = \frac{\exp(\langle \phi(x)\;,\; w^{(j)})\rangle + b_{j})}{\sum_{i=1}^{K} \exp(\langle \phi(x)\;,\; w^{(i)})\rangle + b_{i})}\\
+            &\text{Substituting eq$(8)$ in above equation} \\
+            &g_{j}(x) = \frac{\prod_{n=1}^{N}\exp(\Omega(x,x_{n})a_{nj} + b_{j})}{\sum_{i=1}^{K} \prod_{n=1}^{N}\exp(\Omega(x,x_{n})a_{ni} + b_{i})}
+        \end{align*}
+        Now our problem becomes:
+        \begin{align*}
+            & x \in C_{k}, \Leftrightarrow k= arg \max_{j=1,\ldots,K} g_{j}(x)\\
+            & \text{where } g_{j}(x) = \frac{\prod_{n=1}^{N}\exp(\Omega(x,x_{n})a_{nj} + b_{j})}{\sum_{i=1}^{K} \prod_{n=1}^{N}\exp(\Omega(x,x_{n})a_{ni} + b_{i})}
+        \end{align*}
 
-    \quad Previously there were $N+1$ linear equations with $N+1$ unknowns and $O(N^3)$ time complexity.
-\end{frame}
-\begin{frame}{KMeans Kernel LS-SVM Classifier}
-    Now there are $KQ+1$ linear equations with $KQ+1$ unknowns and $O((KQ)^3)$ time complexity. \\
-    As we discussed earlier our problem previously was:
-    \begin{align*}
-        & x \in C_{k}, \Leftrightarrow k= arg \max_{j=1,\ldots,K} g_{j}(x) \\
-        & \text{where } g_{j}(x) = \frac{\prod_{n=1}^{N}\exp(\Omega(x,x_{n})a_{nj} + b_{j})}{\sum_{i=1}^{K} \prod_{n=1}^{N}\exp(\Omega(x,x_{n})a_{ni} + b_{i})}
-    \end{align*}
-    Now our problem becomes:
-    \begin{align*}
-        & x \in C_{k}, \Leftrightarrow k= arg \max_{j=1,\ldots,K} g_{j}(x) \\
-        & \text{where } g_{j}(x) = \frac{\prod_{n=1}^{KQ}\exp(\Omega(x,\mu_{n}^{k})a_{nj} + b_{j})}{\sum_{i=1}^{K} \prod_{n=1}^{KQ}\exp(\Omega(x,\mu_{n}^{k})a_{ni} + b_{i})}
-    \end{align*}
-    \text{Here $g_{j}$ is the non-linear soft max function}
-\end{frame}
+        \text{Here $g_{j}$ is the non-linear soft max function}
+    \end{frame}
 
-\section{Application}
-\begin{frame}{KMeans Kernel LS-SVM Classifier}
-We have implemented the KMeans Kernel LS-SVM Classifier on the MNIST dataset.
-It is a dataset of handwritten digits $(0,1,\ldots,9)$ consisting of $60000$ training images and $10000$ test images.  Each image is of size $28 \times 28$ pixels with monochrome color with intensity ranging from $0$ to $255$. \\ \quad Here are the following steps we have followed: \\
-\begin{enumerate}
-    \item Extracting all the overlapping patches of size $l \times l$ by iterating over all images $x_{n}$ from a class $C_{k}$ where $l<L=28$.
-    \item Vectorize all the patches by concatenating columns and normalize.
-    \begin{align*}
-    & x_{nij} = x_{nij} - avg(x_{nij}) \\
-    & x_{nij} = \frac{x_{nij}}{||x_{nij}||}
-    \end{align*}
-    \seti
-\end{enumerate}
-\end{frame}
-\begin{frame}{KMeans Kernel Classifier}
-\begin{enumerate}
-\conti
-    \item Now these patches are used to define the input data for KMeans clustering algorithm.
-    \item After KMeans clustering, we get $KQ$ centroids for each class $C_{k}$.
-    \item Now these centroids are used to define the input data for LS-SVM kernel model. With each centroid we associate a label $y_{q}^{k}$ which is a vector with 1 in the $k^{th}$ position and $0$ elsewhere and we train the LS-SVM classifier.
-\end{enumerate}
-\end{frame}
-\subsection{Explanation}
-\begin{frame}{Application}
-\begin{block}{Explanation}
-    \quad From each image $x_{n}$ we are extracting $(L - l +1) \times (L - l + 1)$ patches.We're sliding this patch across the image one pixel at a time, both horizontally and vertically. Horizontally, we can start the patch at any of the first $(L - l + 1)$ columns.
 
-\quad \\ \quad For example, if $L$ is 5 and $l$ is $3$, we can start the patch at $1^{st}$ $2^{nd}$ or $3^{rd}$ column.
-    That's $5 - 3 + 1 = 3$ possible starting columns.
-    The same logic applies vertically, giving us $(L - l + 1)$ possible starting rows.
-    Since we can independently choose the starting row and the starting column, we multiply these two quantities together to get the total number of patches.
-    Hence, the formula for the number of patches is $(L - l + 1) \times (L - l + 1)$.
-\end{block}
-\end{frame}
-\subsection{Training}
-\begin{frame}{Application}
-\begin{block}{Training}
-In the code we have taken $l=25$. Hence, we get $(28-25+1) \times (28-25+1) = 4 \times 4 = 16$ patches from each image. Therefore we get  $16 \times 60,000 = 9,60,000$ training samples(patches) for LS-SVM classifier. Considered $100 \leq Q \leq 5000$, $K=10$, $\gamma = 10^{-6}$ i.e., regularization parameter and $\beta = 10^{-6}$ i.e., tolerance for KMeans clustering.
+    \section{KMeans Clustering}
+    \begin{frame}{KMeans Clustering}
+        First we use KMeans clustering algorithm to extract a set of representative vectors for each class.
+        Now this representative vectors will be passed into LS-SVM kernel model as training dataset.
+        KMeans clustering algorithm is as follows:
+        \begin{enumerate}
+            \item Take $\{x_{i}^{k}|x_{i}^{k} \in \mathbb{R^{M}}, i=1,\ldots,N_{k}\}$ as training samples for class $C_{k}$ where
+            $N_{k}$ is the number of training samples for the class $C_{k}$ and $N = \sum_{k=1}^{K}N_{k}$ is the total
+            number of training samples.
+            \item Take $\{\mu_{q}^{k}|\mu_{q}^{k} \in \mathbb{R^{M}}, q=1,\ldots,Q \}$ as initial centroids
+            for class $C_{k}$ where $Q<N_{K}$ is the number of centroids for class $C_{k}$.
+            \item Build a matrix $X_{k} = [x_{im}^{k}]_{N_{k} \times M}$ where each row is a training sample for class $C_{k}$.
+            \item Build a matrix $M_{k} = [\mu_{qm}^{k}]_{Q \times M}$ where each row is a randomly initialized centroid
+            for class $C_{k}$.
+            \item Let $R_{k} = X_{k}M_{k}^{T} = [r_{iq}^{k}]_{N_{k}\times Q}$
+            \seti
+        \end{enumerate}
+    \end{frame}
+    \begin{frame}{KMeans Clustering}
+        \begin{enumerate}
+            \conti
+            \item Let $\hat{R_{k}} = [\hat{r_{iq}^{k}}]_{N_{k}\times Q}$ be transformed sparse matrix of $R_{k}$ where:
+            \begin{align*}
+                \hat{r_{iq}^{k}} = \begin{cases}
+                                       1 & \text{if } q = \arg \max_{q}r_{iq}^{k} \\
+                                       0 & \text{otherwise}
+                \end{cases}
+                i = 1,\ldots,N_{k}
+            \end{align*}
+            Each sample is assigned to the nearest centroid.
+            \item $\hat{M_{k}} = \hat{R_{k}^{T}}X_{k} = [\hat{\mu_{qm}^{k}}]_{Q \times M}$. This is the new set of centroids.
+            \item Normalizing new set of centroids:
+            \begin{align*}
+                & \hat{\mu_{q}^{k}} = \frac{\hat{\mu_{q}^{k}}}{|| \hat{\mu_{q}^{k}} ||}
+                & q=1,\ldots,Q
+            \end{align*}
+            \seti
+            % \seti
+        \end{enumerate}
+    \end{frame}
+    \begin{frame}{KMeans Clustering}
+        \begin{enumerate}
+            \conti
+            \item Computing alignment deviation between new set and old set of centroids:
+            \begin{align*}
+                \delta = 1 - \frac{\sum_{q=1}^{Q}\langle \hat{\mu_{q}^{k}}\; \; \mu_{q}^{k} \rangle}{Q}
+            \end{align*}
+            \item $M_{k} = \hat{M_{k}}$
+            \item Repeat steps 5 to 10 until $\delta < \beta $ where $\beta$ is the tolerance.
+            \item Return $M_{k}$
+        \end{enumerate}
+        Here $\beta$ is considered as small as possible.
+    \end{frame}
 
-\quad \\ For this particular dataset, polynomial kernel is considered as degree of 4:
-    \begin{align*}
-        \Omega(x, x\prime) = \langle x \;,\; x\prime  \rangle^{4}
-    \end{align*}
-\end{block}
-\end{frame}
 
-\subsection{Testing}
-\begin{frame}{Application}
-\begin{block}{Testing}
-    \quad After training the LS-SVM classifier, we test the classifier on the test dataset.
-    Let $x_{n}$ be a test image. \\
+    \section{KMeans Kernel LS-SVM Classifier}
+    \begin{frame}{KMeans Kernel LS-SVM Classifier}
+        \quad After extracting a set of representative vectors for each class
+        $C_{k}, k=1,\ldots,K$ using KMeans clustering,
+        we pass these $KQ$ centroids into LS-SVM kernel model as training dataset. \\
+        \quad \\
+        \quad Training dataset for LS-SVM before KMeans clustering:
+        \begin{align*}
+            \{(x_{i}^{k},y_{i}^{k})| x_{i}^{k} \in \mathbb{R^{M}},y_{i}^{k} \in \mathbb{R^{K}}, i=1,\ldots,N\}
+        \end{align*}
+        \quad Training dataset for LS-SVM after KMeans clustering:
+        \begin{align*}
+            \{(\mu_{q}^{k},y_{q}^{k})| \mu_{q}^{k} \in \mathbb{R^{M}},y_{q}^{k} \in \mathbb{R^{K}}, q=1,\ldots,KQ\}
+        \end{align*}
+        \quad As you can see the training dataset size is reduced from $N$ to $KQ$ where \quad $KQ<N$.
 
-    \quad \\ \quad We extract all the overlapping patches of size $l \times l$ from the test image $x_{n}$.
-    Now we pass these patches into the LS-SVM classifier and get the predicted label for each patch. \\
-    \quad \\ \quad We take the majority vote of all the predicted labels, assign that label to the test image $x_{n}$.
-    \end{block}
-\end{frame}
-\subsection{Interpretation}
-\begin{frame}{Application}
-\begin{block}{Interpretation}
-   \begin{figure}[htbp]
-            \centering
-            \includegraphics[scale=0.38]{output.png} % Adjust the width as needed
-            \caption{$Q$ vs $\eta\%$ (test error)}
-            \label{fig}
-        \end{figure}
-    From the Fig.~\ref{fig} optimal $Q$ was considered as $4000$ where the test error, $\eta = 0.89\%$.
-\end{block}
-\end{frame}
-\section{Conclusion}
-\begin{frame}{Conclusion}
-    \begin{block}{Conclusion}
-    First we have used KMeans clustering algorithm to extract a set of representative vectors for each class.
-    Then we have passed these representative vectors into LS-SVM kernel model as training dataset.
-    This way we have reduced the time complexity of LS-SVM from $O(N^3)$ to $O((KQ)^3)$ where $K$ is the number of classes and $Q$ is number of centroids in each class.
-    This method is significantly faster than LS-SVM, it is more robust and easy to implement.
-    \end{block}
-\end{frame}
-% \section{First Section} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
-% %------------------------------------------------
+        \quad Previously there were $N+1$ linear equations with $N+1$ unknowns and $O(N^3)$ time complexity.
+    \end{frame}
+    \begin{frame}{KMeans Kernel LS-SVM Classifier}
+        Now there are $KQ+1$ linear equations with $KQ+1$ unknowns and $O((KQ)^3)$ time complexity. \\
+        As we discussed earlier our problem previously was:
+        \begin{align*}
+            & x \in C_{k}, \Leftrightarrow k= arg \max_{j=1,\ldots,K} g_{j}(x) \\
+            & \text{where } g_{j}(x) = \frac{\prod_{n=1}^{N}\exp(\Omega(x,x_{n})a_{nj} + b_{j})}{\sum_{i=1}^{K} \prod_{n=1}^{N}\exp(\Omega(x,x_{n})a_{ni} + b_{i})}
+        \end{align*}
+        Now our problem becomes:
+        \begin{align*}
+            & x \in C_{k}, \Leftrightarrow k= arg \max_{j=1,\ldots,K} g_{j}(x) \\
+            & \text{where } g_{j}(x) = \frac{\prod_{n=1}^{KQ}\exp(\Omega(x,\mu_{n}^{k})a_{nj} + b_{j})}{\sum_{i=1}^{K} \prod_{n=1}^{KQ}\exp(\Omega(x,\mu_{n}^{k})a_{ni} + b_{i})}
+        \end{align*}
+        \text{Here $g_{j}$ is the non-linear soft max function}
+    \end{frame}
 
-% \subsection{Subsection Example} % A subsection can be created just before a set of slides with a common theme to further break down your presentation into chunks
 
-% \begin{frame}
-% \frametitle{Paragraphs of Text}
-% Sed iaculis dapibus gravida. Morbi sed tortor erat, nec interdum arcu. Sed id lorem lectus. Quisque viverra augue id sem ornare non aliquam nibh tristique. Aenean in ligula nisl. Nulla sed tellus ipsum. Donec vestibulum ligula non lorem vulputate fermentum accumsan neque mollis.\\~\\
+    \section{Application}
+    \begin{frame}{KMeans Kernel LS-SVM Classifier}
+        We have implemented the KMeans Kernel LS-SVM Classifier on the MNIST dataset.
+        It is a dataset of handwritten digits $(0,1,\ldots,9)$ consisting of $60000$ training images and $10000$ test images. Each image is of size $28 \times 28$ pixels with monochrome color with intensity ranging from $0$ to $255$. \\ \quad Here are the following steps we have followed: \\
+        \begin{enumerate}
+            \item Extracting all the overlapping patches of size $l \times l$ by iterating over all images $x_{n}$ from a class $C_{k}$ where $l<L=28$.
+            \item Vectorize all the patches by concatenating columns and normalize.
+            \begin{align*}
+                & x_{nij} = x_{nij} - avg(x_{nij}) \\
+                & x_{nij} = \frac{x_{nij}}{||x_{nij}||}
+            \end{align*}
+            \seti
+        \end{enumerate}
+    \end{frame}
+    \begin{frame}{KMeans Kernel Classifier}
+        \begin{enumerate}
+            \conti
+            \item Now these patches are used to define the input data for KMeans clustering algorithm.
+            \item After KMeans clustering, we get $KQ$ centroids for each class $C_{k}$.
+            \item Now these centroids are used to define the input data for LS-SVM kernel model. With each centroid we associate a label $y_{q}^{k}$ which is a vector with 1 in the $k^{th}$ position and $0$ elsewhere and we train the LS-SVM classifier.
+        \end{enumerate}
+    \end{frame}
 
-% Sed diam enim, sagittis nec condimentum sit amet, ullamcorper sit amet libero. Aliquam vel dui orci, a porta odio. Nullam id suscipit ipsum. Aenean lobortis commodo sem, ut commodo leo gravida vitae. Pellentesque vehicula ante iaculis arcu pretium rutrum eget sit amet purus. Integer ornare nulla quis neque ultrices lobortis. Vestibulum ultrices tincidunt libero, quis commodo erat ullamcorper id.
-% \end{frame}
+    \subsection{Explanation}
+    \begin{frame}{Application}
+        \begin{block}{Explanation}
+            \quad From each image $x_{n}$ we are extracting $(L - l +1) \times (L - l + 1)$ patches.We're sliding this patch across the image one pixel at a time, both horizontally and vertically. Horizontally, we can start the patch at any of the first $(L - l + 1)$ columns.
 
-% %------------------------------------------------
+            \quad \\ \quad For example, if $L$ is 5 and $l$ is $3$, we can start the patch at $1^{st}$ $2^{nd}$ or $3^{rd}$ column.
+            That's $5 - 3 + 1 = 3$ possible starting columns.
+            The same logic applies vertically, giving us $(L - l + 1)$ possible starting rows.
+            Since we can independently choose the starting row and the starting column, we multiply these two quantities together to get the total number of patches.
+            Hence, the formula for the number of patches is $(L - l + 1) \times (L - l + 1)$.
+        \end{block}
+    \end{frame}
 
-% \begin{frame}
-% \frametitle{Bullet Points}
-% \begin{itemize}
-% \item Lorem ipsum dolor sit amet, consectetur adipiscing elit
-% \item Aliquam blandit faucibus nisi, sit amet dapibus enim tempus eu
-% \item Nulla commodo, erat quis gravida posuere, elit lacus lobortis est, quis porttitor odio mauris at libero
-% \item Nam cursus est eget velit posuere pellentesque
-% \item Vestibulum faucibus velit a augue condimentum quis convallis nulla gravida
-% \end{itemize}
-% \end{frame}
+    \subsection{Training}
+    \begin{frame}{Application}
+        \begin{block}{Training}
+            In the code we have taken $l=25$. Hence, we get $(28-25+1) \times (28-25+1) = 4 \times 4 = 16$ patches from each image. Therefore we get  $16 \times 60,000 = 9,60,000$ training samples(patches) for LS-SVM classifier. Considered $100 \leq Q \leq 5000$, $K=10$, $\gamma = 10^{-6}$ i.e., regularization parameter and $\beta = 10^{-6}$ i.e., tolerance for KMeans clustering.
 
-% %------------------------------------------------
+            \quad \\ For this particular dataset, polynomial kernel is considered as degree of 4:
+            \begin{align*}
+                \Omega(x, x\prime) = \langle x \;,\; x\prime  \rangle^{4}
+            \end{align*}
+        \end{block}
+    \end{frame}
 
-% \begin{frame}
-% \frametitle{Blocks of Highlighted Text}
-% \begin{block}{Block 1}
-% Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-% \end{block}
+    \subsection{Testing}
+    \begin{frame}{Application}
+        \begin{block}{Testing}
+            \quad After training the LS-SVM classifier, we test the classifier on the test dataset.
+            Let $x_{n}$ be a test image.                                                                     \\
 
-% \begin{block}{Block 2}
-% Pellentesque sed tellus purus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum quis magna at risus dictum tempor eu vitae velit.
-% \end{block}
+            \quad                                                                                            \\ \quad We extract all the overlapping patches of size $l \times l$ from the test image $x_{n}$.
+            Now we pass these patches into the LS-SVM classifier and get the predicted label for each patch. \\
+            \quad                                                                                            \\ \quad We take the majority vote of all the predicted labels, assign that label to the test image $x_{n}$.
+        \end{block}
+    \end{frame}
 
-% \begin{block}{Block 3}
-% Suspendisse tincidunt sagittis gravida. Curabitur condimentum, enim sed venenatis rutrum, ipsum neque consectetur orci, sed blandit justo nisi ac lacus.
-% \end{block}
-% \end{frame}
+    \subsection{Interpretation}
+    \begin{frame}{Application}
+        \begin{block}{Interpretation}
+            \begin{figure}[htbp]
+                \centering
+                \includegraphics[scale=0.38]{output.png} % Adjust the width as needed
+                \caption{$Q$ vs $\eta\%$ (test error)}
+                \label{fig}
+            \end{figure}
+            From the Fig.~\ref{fig} optimal $Q$ was considered as $4000$ where the test error, $\eta = 0.89\%$.
+        \end{block}
+    \end{frame}
 
-% %------------------------------------------------
 
-% \begin{frame}
-% \frametitle{Multiple Columns}
-% \begin{columns}[c] % The "c" option specifies centered vertical alignment while the "t" option is used for top vertical alignment
+    \section{Conclusion}
+    \begin{frame}{Conclusion}
+        \begin{block}{Conclusion}
+            First we have used KMeans clustering algorithm to extract a set of representative vectors for each class.
+            Then we have passed these representative vectors into LS-SVM kernel model as training dataset.
+            This way we have reduced the time complexity of LS-SVM from $O(N^3)$ to $O((KQ)^3)$ where $K$ is the number of classes and $Q$ is number of centroids in each class.
+            This method is significantly faster than LS-SVM, it is more robust and easy to implement.
+        \end{block}
+    \end{frame}
 
-% \column{.45\textwidth} % Left column and width
-% \textbf{Heading}
-% \begin{enumerate}
-% \item Statement
-% \item Explanation
-% \item Example
-% \end{enumerate}
+    \begin{frame}
+        \Huge{\centerline{The End}}
+    \end{frame}
 
-% \column{.5\textwidth} % Right column and width
-% Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer lectus nisl, ultricies in feugiat rutrum, porttitor sit amet augue. Aliquam ut tortor mauris. Sed volutpat ante purus, quis accumsan dolor.
-
-% \end{columns}
-% \end{frame}
-
-% %------------------------------------------------
-% \section{Second Section}
-% %------------------------------------------------
-
-% \begin{frame}
-% \frametitle{Table}
-% \begin{table}
-% \begin{tabular}{l l l}
-% \toprule
-% \textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-% \midrule
-% Treatment 1 & 0.0003262 & 0.562 \\
-% Treatment 2 & 0.0015681 & 0.910 \\
-% Treatment 3 & 0.0009271 & 0.296 \\
-% \bottomrule
-% \end{tabular}
-% \caption{Table caption}
-% \end{table}
-% \end{frame}
-
-% %------------------------------------------------
-
-% \begin{frame}
-% \frametitle{Theorem}
-% \begin{theorem}[Mass--energy equivalence]
-% $E = mc^2$
-% \end{theorem}
-% \end{frame}
-
-% %------------------------------------------------
-
-% \begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-% \frametitle{Verbatim}
-% \begin{example}[Theorem Slide Code]
-% \begin{verbatim}
-% \begin{frame}
-% \frametitle{Theorem}
-% \begin{theorem}[Mass--energy equivalence]
-% $E = mc^2$
-% \end{theorem}
-% \end{frame}\end{verbatim}
-% \end{example}
-% \end{frame}
-
-% %------------------------------------------------
-
-% \begin{frame}
-% \frametitle{Figure}
-% Uncomment the code on this slide to include your own image from the same directory as the template .TeX file.
-% %\begin{figure}
-% %\includegraphics[width=0.8\linewidth]{test}
-% %\end{figure}
-% \end{frame}
-
-% %------------------------------------------------
-
-% \begin{frame}[fragile] % Need to use the fragile option when verbatim is used in the slide
-% \frametitle{Citation}
-% An example of the \verb|\cite| command to cite within the presentation:\\~
-
-% This statement requires citation \cite{p1}.
-% \end{frame}
-
-% %------------------------------------------------
-
-% \begin{frame}
-% \frametitle{References}
-% \footnotesize{
-% \begin{thebibliography}{99} % Beamer does not support BibTeX so references must be inserted manually as below
-% \bibitem[Smith, 2012]{p1} John Smith (2012)
-% \newblock Title of the publication
-% \newblock \emph{Journal Name} 12(3), 45 -- 678.
-% \end{thebibliography}
-% }
-% \end{frame}
-
-% %------------------------------------------------
-
-\begin{frame}
-\Huge{\centerline{The End}}
-\end{frame}
-
-% %----------------------------------------------------------------------------------------
 
 \end{document}
