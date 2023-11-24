@@ -230,7 +230,7 @@
         Here $I_{N \times N}$ is the identity matrix, $u_{N \times 1} = [1,\ldots,1]^{T}$ is a vector of ones,
         $a^{(j)}_{N \times 1} = [a_{1j}, \ldots, a_{Nj}]^{T}$ is weights and $y_{j} = [y_{1j}, \ldots, y_{Nj}]^{T}$ is the
         vector of binary labels for the $j^{th}$ class.
-        Each system has $N$ linear equations with $N$ unknowns.
+        Each system has $N + 1$ linear equations with $N + 1$ unknowns.
         \begin{align}
             \Theta = \begin{bmatrix}
                          0 & u^{T}                 \\
@@ -341,10 +341,10 @@
         \end{align*}
         \quad As you can see the training dataset size is reduced from $N$ to $KQ$ where \quad $KQ<N$.
 
-        \quad Previously there were $N$ linear equations with $N$ unknowns and $O(N^3)$ time complexity.
+        \quad Previously there were $N + 1$ linear equations with $N + 1$ unknowns and $O(N^3)$ time complexity.
     \end{frame}
     \begin{frame}{KMeans Kernel LS-SVM Classifier}
-        Now there are $KQ$ linear equations with $KQ$ unknowns and $O((KQ)^3)$ time complexity. \\
+        Now there are $KQ + 1$ linear equations with $KQ + 1$ unknowns and $O((KQ)^3)$ time complexity. \\
         As we discussed earlier our problem previously was:
         \begin{align*}
             & x \in C_{k}, \Leftrightarrow k= arg \max_{j=1,\ldots,K} g_{j}(x) \\
